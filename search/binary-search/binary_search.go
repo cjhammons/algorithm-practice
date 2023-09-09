@@ -23,7 +23,7 @@ func binarySearch(arr []int, v int) bool {
 
 func binarySearchRecursive(arr []int, v int, lo int, hi int) bool {
 	for lo < hi {
-		m := int(lo - (hi-lo)/2)
+		m := int(lo + (hi-lo)/2)
 		n := arr[m]
 
 		if v == n {
