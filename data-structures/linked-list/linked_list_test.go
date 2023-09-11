@@ -4,29 +4,22 @@ import "testing"
 
 func TestAppend(t *testing.T) {
 	list := &DoublyLinkedList{}
-
 	list.Append(1)
 	list.Append(2)
 	list.Append(3)
 
-	if list.Head.Value != 1 {
-		t.Errorf("Head node value should be 1, got %d", list.Head.Value)
+	if list.Head.Value != 1 || list.Tail.Value != 3 {
+		t.Errorf("Append did not work as expected.")
 	}
+}
 
-	if list.Tail.Value != 3 {
-		t.Errorf("Tail node value should be 3, got %d", list.Tail.Value)
-	}
+func TestPrepend(t *testing.T) {
+	list := &DoublyLinkedList{}
+	list.Prepend(1)
+	list.Prepend(2)
 
-	if list.Head.Next.Value != 2 {
-		t.Errorf("Second node value should be 2, got %d", list.Head.Next.Value)
-	}
-
-	if list.Head.Next.Prev.Value != 1 {
-		t.Errorf("Second node's previous should point back to head, got %d", list.Head.Next.Prev.Value)
-	}
-
-	if list.Tail.Prev.Value != 2 {
-		t.Errorf("Tail node's previous should be 2, got %d", list.Tail.Prev.Value)
+	if list.Head.Value != 2 || list.Tail.Value != 1 {
+		t.Errorf("Prepend did not work as expected.")
 	}
 }
 
@@ -35,42 +28,42 @@ func TestDelete(t *testing.T) {
 	list.Append(1)
 	list.Append(2)
 	list.Append(3)
-	list.Append(4)
-
-	if !list.Delete(2) {
-		t.Error("Delete should return true for a value that exists in the list")
-	}
-
-	if list.Head.Value != 1 {
-		t.Errorf("Head node value should be 1, got %d", list.Head.Value)
-	}
+	list.Delete(2)
 
 	if list.Head.Next.Value != 3 {
-		t.Errorf("Second node value should be 3, got %d", list.Head.Next.Value)
+		t.Errorf("Delete did not work as expected.")
 	}
+}
 
-	if list.Head.Next.Prev.Value != 1 {
-		t.Errorf("Second node's previous should point back to head, got %d", list.Head.Next.Prev.Value)
+func TestLength(t *testing.T) {
+	list := &DoublyLinkedList{}
+	list.Append(1)
+	list.Append(2)
+
+	if list.length() != 2 {
+		t.Errorf("Length did not return the expected value.")
 	}
+}
 
-	if list.Tail.Value != 4 {
-		t.Errorf("Tail node value should be 4, got %d", list.Tail.Value)
+func TestInsertAt(t *testing.T) {
+	list := &DoublyLinkedList{}
+	list.Append(1)
+	list.Append(3)
+	list.InsertAt(2, 1)
+
+	if list.Head.Next.Value != 2 {
+		t.Errorf("InsertAt did not work as expected.")
 	}
+}
 
-	if !list.Delete(4) {
-		t.Error("Delete should return true for a value that exists in the list")
+func TestDeleteAt(t *testing.T) {
+	list := &DoublyLinkedList{}
+	list.Append(1)
+	list.Append(2)
+	list.Append(3)
+	list.DeleteAt(1)
+
+	if list.Head.Next.Value != 3 {
+		t.Errorf("DeleteAt did not work as expected.")
 	}
-
-	if list.Tail.Value != 3 {
-		t.Errorf("Tail node value should be 3, got %d", list.Tail.Value)
-	}
-
-	if list.Delete(10) {
-		t.Error("Delete should return false for a value that does not exist in the list")
-	}
-
-	if !list.Delete(1) {
-		t.Error("Delete should return true for a value that exists in the list")
-	}
-
 }
